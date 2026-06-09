@@ -2,13 +2,13 @@ export const RequestService = {
 	get: (url) => {
 		return fetch(url, {
 			method: 'GET',
-			headers: []
+			headers: {}
 		});
 	},
 	post: (url, json) => {
 		return fetch(url, {
 			method: 'POST',
-			headers: [],
+			headers: {},
 			body: JSON.stringify(json)
 		});
 	},

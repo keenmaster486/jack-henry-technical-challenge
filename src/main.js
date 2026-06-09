@@ -45,7 +45,7 @@ class MainTemplate extends LitElement {
 		return html`
 			<header-template></header-template>
 			${cache(Pages[this.page].render())}
-			<footer-template></footer-template>
+			<!-- <footer-template></footer-template> -->
 		`;
 	}
 }
