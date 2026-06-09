@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
+import {EVENTS, EventManager} from '../../events.js';
+import {Pages} from '../../main.js';
 
 @customElement('header-template')
 export class HeaderTemplate extends LitElement {
@@ -38,6 +40,18 @@ export class HeaderTemplate extends LitElement {
 			}
 		}
 	`;
+	pageClick(page) {
+		EventManager.sendEvent(EVENTS.NAVIGATION.PAGE, {
+			page: page.slug
+		});
+	}
+	pageItem(page, selected) {
+		return html`
+			<span class="${selected ? 'selected' : ''}" @click="${() => {this.pageClick(page);}}">
+				${page.name}
+			</span>
+		`;
+	}
 	render() {
 		return html`
 			<header>
@@ -45,8 +59,9 @@ export class HeaderTemplate extends LitElement {
 					
 				</div>
 				<div class="menu">
-					<span class="selected">Search</span>
-					<span>Bookmarks</span>
+					${Object.values(Pages).map((page) => {
+						return this.pageItem(page);
+					})}
 				</div>
 			</header>
 		`;

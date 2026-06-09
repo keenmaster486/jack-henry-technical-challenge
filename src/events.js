@@ -1,10 +1,10 @@
 const EVENTS = {
 	NAVIGATION: {
-		TAB: 'navigation-tab'
+		PAGE: 'navigation-page'
 	}
 };
 
-const eventManager = {
+const EventManager = {
     sendEvent: (eventName, detail) => {
         window.dispatchEvent(new CustomEvent(eventName, {
             detail: detail
@@ -15,4 +15,4 @@ const eventManager = {
     }
 };
 
-export {EVENTS, eventManager}
+export {EVENTS, EventManager}
