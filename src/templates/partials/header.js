@@ -40,14 +40,17 @@ export class HeaderTemplate extends LitElement {
 			}
 		}
 	`;
-	pageClick(page) {
+	pageClick(page, e) {
+		if (e && e.key != 'Enter') {
+			return;
+		}
 		EventManager.sendEvent(EVENTS.NAVIGATION.PAGE, {
 			page: page.slug
 		});
 	}
 	pageItem(page, selected) {
 		return html`
-			<span class="${selected ? 'selected' : ''}" @click="${() => {this.pageClick(page);}}">
+			<span tabindex="0" class="${selected ? 'selected' : ''}" @keydown=${(e) => {this.pageClick(page, e)}} @click="${() => {this.pageClick(page);}}">
 				${page.name}
 			</span>
 		`;

@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
-import {htmlDecode} from '../utils.js';
+import {htmlDecode, sanitize} from '../utils.js';
 import {EVENTS, EventManager} from '../events.js';
 import {BookmarkService} from '../services/bookmark.js';
 
@@ -134,12 +134,12 @@ class MultiItem extends LitElement {
 				<div class="image"><img src="${this.item.thumbnailURL}"/></div>
 				<div class="body">
 					<div class="headline">
-						<div class="title">${htmlDecode(this.item.title)}</div>
+						<div class="title">${sanitize(htmlDecode(this.item.title))}</div>
 						<div class="date">${dateString}</div>
 					</div>
-					<div class="description">${htmlDecode(this.item.description)}</div>
+					<div class="description">${sanitize(htmlDecode(this.item.description))}</div>
 					<div class="bottom">
-						<div>Comments: ${this.item.statistics.commentCount}</div>
+						<div>Comments: ${parseInt(this.item.statistics.commentCount)}</div>
 						<button @click=${this.toggleBookmark}>${this.isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}</button>
 					</div>
 				</div>
@@ -204,7 +204,10 @@ export class MultiView extends LitElement {
 		super();
 		this.view = 'grid';
 	}
-	setView(view) {
+	setView(view, e) {
+		if (e && e.key != 'Enter') {
+			return;
+		}
 		this.view = view;
 	}
 	renderItems() {
@@ -218,8 +221,8 @@ export class MultiView extends LitElement {
 		return html`
 			<div class="multi-view-container">
 				<div class="select-view">
-					<span @click=${() => {this.setView('grid')}}>Grid View</span>
-					<span @click=${() => {this.setView('list')}}>List View</span>
+					<span tabindex="0" @keydown=${(e) => {this.setView('grid', e);}} @click=${() => {this.setView('grid');}}>Grid View</span>
+					<span tabindex="0" @keydown=${(e) => {this.setView('list', e);}} @click=${() => {this.setView('list');}}>List View</span>
 				</div>
 				<div class="multi-view ${this.view || 'grid'}-view">
 					${this.items.length ? this.renderItems() : 'No results'}
