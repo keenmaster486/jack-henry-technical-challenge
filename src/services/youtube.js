@@ -5,5 +5,9 @@ export const YoutubeService = {
 	search: function (term, order, pageToken) {
 		const response = RequestService.getSync(`${this.apiURL}/search?term=${term}&order=${order}&pageToken=${pageToken}`);
 		return response;
+	},
+	videos: function (ids) {
+		const response = RequestService.getSync(`${this.apiURL}/videos?ids=${ids.join(',')}`);
+		return response;
 	}
 };

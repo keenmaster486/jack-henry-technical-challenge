@@ -6,8 +6,7 @@ import {Search} from '../components/search.js';
 export class SearchPage extends LitElement {
 	render() {
 		return html`
-			<div>
-				SearchPage Template
+			<div style="width: 100%">
 				<search-component></search-component>
 			</div>
 		`;

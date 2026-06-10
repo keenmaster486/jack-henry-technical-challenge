@@ -1,7 +1,10 @@
 const EVENTS = {
 	NAVIGATION: {
 		PAGE: 'navigation-page'
-	}
+	},
+    BOOKMARKS: {
+        RELOAD: 'bookmarks-reload'
+    }
 };
 
 const EventManager = {

@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit';
+import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import {cache} from 'lit/directives/cache.js';
 import {EVENTS, EventManager} from './events.js';
@@ -30,6 +30,13 @@ const Pages = {
 
 @customElement('main-template')
 class MainTemplate extends LitElement {
+	static styles = css`
+		.page {
+			padding: 20px;
+			max-width: 1400px;
+			margin: 0 auto;
+		}
+	`;
 	static properties = {
 		page: 'search'
 	};
@@ -44,7 +51,9 @@ class MainTemplate extends LitElement {
 	render() {
 		return html`
 			<header-template></header-template>
-			${cache(Pages[this.page].render())}
+			<div class="page">
+				${cache(Pages[this.page].render())}
+			</div>
 			<!-- <footer-template></footer-template> -->
 		`;
 	}
