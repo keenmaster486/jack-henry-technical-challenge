@@ -55,11 +55,21 @@ export class Search extends LitElement {
 	getAPIResults() {
 		return YoutubeService.search(this.term, this.order || 'relevance', this.pageToken || '');
 	}
+	search(e) {
+		if (e && e.key != 'Enter') {
+			return;
+		}
+		this.clear();
+		this.getNewItems();
+	}
 	clear() {
 		this.pageToken = '';
 		this.items = [];
 	}
-	search() {
+	getNewItems(e) {
+		if (e && e.key != 'Enter') {
+			return;
+		}
 		this.term = this.inputRef.value.value;
 		const apiResults = this.getAPIResults();
 		this.pageToken = apiResults.nextPageToken;
@@ -72,17 +82,17 @@ export class Search extends LitElement {
 		return html`
 			<div class="search-component">
 				<div class="search-inputs">
-					<input ${ref(this.inputRef)} type="text" />
+					<input @keydown=${(e) => {this.search(e);}} ${ref(this.inputRef)} type="text" />
 					<div>Sort by:</div>
 					<select ${ref(this.sortRef)} @input=${this.updateFilters}>
 						<option value="relevance" selected>Relevance</option>
 						<option value="date">Date</option>
 						<option value="rating">Rating</option>
 					</select>
-					<button @click=${() => {this.clear(); this.search();}}>Search</button>
+					<button tabindex="0" @keydown=${(e) => {this.search(e);}} @click=${() => {this.search();}}>Search</button>
 				</div>
 				<multi-view ${ref(this.viewRef)} .items=${this.items}></multi-view>
-				${this.items.length ? html`<button @click=${this.search}>Load More</button>` : ''}
+				${this.items.length ? html`<button @keydown=${(e) => {this.getNewItems(e);}} @click=${this.getNewItems}>Load More</button>` : ''}
 			</div>
 		`;
 	}
