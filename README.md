@@ -4,10 +4,13 @@ This application consists of a Lit frontend and a small Express backend that med
 
 Make sure you create a .env that matches that .env.example file, with your YouTube API key filled in.
 
+
 To run:
 
 npm install
+
 npx vite
+
 
 In a separate terminal window:
 
