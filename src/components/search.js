@@ -72,6 +72,7 @@ export class Search extends LitElement {
 		}
 		this.term = this.inputRef.value.value;
 		const apiResults = this.getAPIResults();
+		if (!apiResults.items) { return; }
 		this.pageToken = apiResults.nextPageToken;
 		this.items = [...this.items, ...apiResults.items];
 	}
@@ -92,7 +93,7 @@ export class Search extends LitElement {
 					<button tabindex="0" @keydown=${(e) => {this.search(e);}} @click=${() => {this.search();}}>Search</button>
 				</div>
 				<multi-view ${ref(this.viewRef)} .items=${this.items}></multi-view>
-				${this.items.length ? html`<button @keydown=${(e) => {this.getNewItems(e);}} @click=${this.getNewItems}>Load More</button>` : ''}
+				${this.items.length ? html`<button @keydown=${(e) => {this.getNewItems(e);}} @click=${() => {this.getNewItems();}}>Load More</button>` : ''}
 			</div>
 		`;
 	}

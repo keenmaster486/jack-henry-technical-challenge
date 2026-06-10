@@ -153,7 +153,7 @@ app.get('/search', async (req, res) => {
 	const statsJson = await statsResponse.json();
 
 	const videoStats = {};
-	await statsJson.items.forEach((item) => {
+	statsJson.items.forEach((item) => {
 		videoStats[item.id] = item.statistics;
 	});
 
